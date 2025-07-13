@@ -130,7 +130,9 @@ class GranularityApp:
 
     def show_analysis_options(self):
         if self.analyzer is None or self.analyzer.df is None:
+            st.warning("No DataFrame loaded.")
             return
+
         st.markdown("---")
         st.subheader("Choose analysis mode:")
         mode = st.radio(
@@ -141,9 +143,11 @@ class GranularityApp:
                 "Select specific columns to analyze granularity.",
             ],
             label_visibility="hidden",
+            key="analysis_mode_radio",
         )
-        if st.button("Execute granularity analysis"):
-            if mode == "Automatic (all columns)":
+
+        if mode == "Automatic (all columns)":
+            if st.button("Execute granularity analysis", key="auto_granularity_btn"):
                 forbidden = list(
                     set(
                         self.analyzer.detect_metric_columns()
@@ -159,12 +163,17 @@ class GranularityApp:
                     list(self.analyzer.df.columns)
                 )
                 self.show_granularity_result(result)
-            else:  # Manual
-                columns = list(self.analyzer.df.columns)
-                selected_columns = st.multiselect(
-                    "Choose columns for granularity analysis:", columns
-                )
-                if selected_columns:
+        else:  # Manual
+            columns = list(self.analyzer.df.columns)
+            selected_columns = st.multiselect(
+                "Choose columns for granularity analysis:",
+                columns,
+                key="granularity_columns",
+            )
+            if selected_columns:
+                if st.button(
+                    "Execute granularity analysis", key="manual_granularity_btn"
+                ):
                     selected_metrics = [
                         c
                         for c in selected_columns
@@ -176,8 +185,8 @@ class GranularityApp:
                         )
                     result = self.analyzer.evaluate_granularities(selected_columns)
                     self.show_granularity_result(result)
-                else:
-                    st.info("Select at least one column to start the analysis.")
+            else:
+                st.info("Select at least one column to start the analysis.")
 
     def show_granularity_result(self, result):
         if result:
