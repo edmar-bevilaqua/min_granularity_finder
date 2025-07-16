@@ -1,4 +1,5 @@
 # min_granularity_finder
+
 ---
 
 **min_granularity_finder** is a Streamlit-based tool designed to help users identify the minimum granularity of tabular datasets (such as CSV or Excel files) without running into combinatorial explosion. This is particularly useful for data analysts and engineers who need to understand the uniqueness and aggregation levels of their data quickly and interactively.
