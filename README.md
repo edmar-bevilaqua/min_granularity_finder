@@ -12,6 +12,8 @@
 - Visual feedback on the uniqueness of combinations.
 - Handles files with many columns and mixed data types.
 
+If you want to test the application in the cloud without having to clone the repository, **[min-granularity-finder.streamlit.app](https://min-granularity-finder.streamlit.app/)**
+
 ## How to Run Locally
 
 1. **Clone the repository:**
