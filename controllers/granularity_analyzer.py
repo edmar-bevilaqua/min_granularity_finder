@@ -35,7 +35,11 @@ class GranularityAnalyzer:
 
     def detect_metric_columns(self):
         metric_patterns = re.compile(
-            r"(pre[cç]o|valor|m[eé]dia|media|mediana|movel|margem|volume|quantidade|qtd|custo|venda|price|value|avg|min|max|wholesale|retail|unit|ranking|score|desvio|desempenho|percentual|estat|frequ[eê]ncia)",
+            r"("  # start group
+            r"pre[cç]o|valor|m[eé]dia|media|mediana|movel|margem|volume|quantidade|qtd|custo|venda|"
+            r"price|value|avg|min|max|wholesale|retail|unit|ranking|score|desvio|desempenho|percentual|estat|frequ[eê]ncia|"
+            r"quantity|amount|total|count|number|sum|qty"
+            r")",
             re.IGNORECASE,
         )
         return [col for col in self.df.columns if metric_patterns.search(str(col))]
